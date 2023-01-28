@@ -1,34 +1,44 @@
 
 
 
-const showModal = (modalSelector) => {
+const showModal = (modalSelector, timerId) => {
   const modal = document.querySelector(modalSelector);
-  // x.classList.add('show');
-  modal.style.display = 'block';
-  // clearInterval(timerId);
-  // document.body.style.overflow = "hidden";
+  modal.style.display = 'block';      // modal.classList.add('show');
+  ///
+  document.body.style.overflow = "hidden";
+  console.log(timerId);
+  if (timerId) {
+    clearInterval(timerId);
+  }
+  clearInterval(timerId);
+  ///
 };  
 const closeModal = (modalSelector) => {
   const modal = document.querySelector(modalSelector);
-  // x.classList.add('hide');
-  modal.style.display = 'none';
-  // document.body.style.overflow = "";
+  modal.style.display = 'none';    // modal.classList.add('hide');
+  ///
+  document.body.style.overflow = "";
+  ///
 };
 
-function modalFunc(triggerSelector, modalSelector) {
+function modalFunc(triggerSelector, modalSelector, timerId) {
   const modalTrigger = document.querySelectorAll(triggerSelector),
-  // modalClose = document.querySelectorAll('[data-close]'),
+  ///
+  modalClose = document.querySelectorAll('[data-close]'),
+  ///
   modal = document.querySelector(modalSelector);
   modalTrigger.forEach(item => {
   item.addEventListener('click', () => {
-  showModal(modalSelector);
+  showModal(modalSelector, timerId);
   });
   });
-  // modalClose.forEach(item => {
-  //   item.addEventListener('click', () => {
-  //     closeModal(modalSelector);
-  //   });
-  // });
+  ///
+  modalClose.forEach(item => {
+    item.addEventListener('click', () => {
+      closeModal(modalSelector);
+    });
+  });
+  ///
   modal.addEventListener('click', (e) => {
   if (e.target === modal || e.target.getAttribute('data-close') == '') {
   closeModal(modalSelector);
@@ -39,20 +49,15 @@ function modalFunc(triggerSelector, modalSelector) {
   closeModal(modalSelector);
   }
   });
-  // const timerId = setTimeout(() => {
-  //   showModal(modal);
-  // }, 4000 );
 
-
-
-
-  // const showModalByScroll = () => {
-  //   if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight -1) {
-  //     showModal(modalSelector);
-  //     window.removeEventListener('scroll', showModalByScroll);
-  //   } 
-  // };
-  // window.addEventListener('scroll', showModalByScroll);
+  const showModalByScroll = () => {
+    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight -1) {
+      showModal(modalSelector, timerId);
+      window.removeEventListener('scroll', showModalByScroll);
+    } 
+  };
+  window.addEventListener('scroll', showModalByScroll);
+  ///
 }
 
 export {showModal, closeModal};

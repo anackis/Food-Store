@@ -1,31 +1,21 @@
 
 
-
 import {showModal, closeModal} from './modal';
+import {postData} from '../services/services';
 
-function formFunc() {
-  const forms = document.querySelectorAll('form');
+function formFunc(formSelector, timerId) {
+  const forms = document.querySelectorAll(formSelector);
   const message = {
     loading: 'img/form/spinner.svg',
-    success: 'All Done !',
+    success: 'We will connect with you soon !',
     failure: 'Error',
   };
   
   forms.forEach(item => {
     bindPostData(item);
   });
-  
-  
-  const postData = async (url, data) => {
-    const res = await fetch(url, {
-      method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: data
-    });
-    return await res.json();
-  };
+
+
   
   function bindPostData(form) {
     form.addEventListener('submit', (e) => {
@@ -59,7 +49,7 @@ function formFunc() {
     const prevModalDialog = document.querySelector('.modal__dialog');
   
     prevModalDialog.style.display = 'none';
-    showModal(modal);
+    showModal('.modal', timerId);
   
     const thanksModal = document.createElement('div');
     thanksModal.classList.add('modal__dialog');
@@ -74,7 +64,7 @@ function formFunc() {
       thanksModal.remove();
       prevModalDialog.style.display = 'block';
       thanksModal.style.display = 'none';
-      closeModal(modal);
+      closeModal('.modal');
     }, 4000);
   }
   

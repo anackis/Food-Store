@@ -1,5 +1,5 @@
 
-
+import { getResourse } from "../services/services";
 
 function cards() {
   class MenuCard {
@@ -11,12 +11,11 @@ function cards() {
       this.price = price;
       this.classes = classes;
       this.parent = document.querySelector(parentSelector);
-      this.transfer = 27;
-      this.changeToUAH();
+      // this.changeToUAH();
     }
-    changeToUAH() {
-      this.price = +this.price * this.transfer;
-    }
+    // changeToUAH() {
+    //   this.price = +this.price;
+    // }
     render() {
       const element = document.createElement('div');
       if (this.classes.length === 0) {  
@@ -31,23 +30,13 @@ function cards() {
           <div class="menu__item-descr">${this.descr}</div>
           <div class="menu__item-divider"></div>
           <div class="menu__item-price">
-              <div class="menu__item-cost">Цена:</div>
-              <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+              <div class="menu__item-cost">Price:</div>
+              <div class="menu__item-total"><span>${this.price}</span> USD/Day</div>
           </div>
       `;
       this.parent.append(element);
     }
   }
-  
-  const getResourse = async (url) => {
-    const res = await fetch(url);
-  
-    if (!res.ok) {
-      throw new Error(`Could no fetch ${url}, status: ${res.status}`);
-    }
-  
-    return await res.json();
-  };
   
   getResourse('http://localhost:3000/menu')
   .then(data => {
